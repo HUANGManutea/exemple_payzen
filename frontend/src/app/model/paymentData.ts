@@ -1,4 +1,4 @@
-import { Customer } from "./curtomer";
+import { Customer } from "./customer";
 
 export interface PaymentData {
     amount: number;
