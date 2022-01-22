@@ -4,6 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PaymentService } from './service/payment.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { PageModule } from './page/page.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +15,10 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    PageModule
   ],
   providers: [PaymentService],
   bootstrap: [AppComponent]
