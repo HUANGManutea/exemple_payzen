@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Customer } from '../../model/customer';
-import { PaymentData } from '../../model/paymentData';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { PaymentService } from '../../service/payment.service';
 import KRGlue from "@lyracom/embedded-form-glue";
 import { FormTokenResponse } from '../../model/formTokenResponse';
@@ -12,41 +9,21 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss']
 })
-export class HomePage {
-  public paymentFormGroup: FormGroup;
+export class HomePage implements OnInit, AfterViewInit {
   public paymentResult$: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
-  constructor(private formBuilder: FormBuilder, public paymentService: PaymentService) {
-    this.paymentFormGroup = this.formBuilder.group({
-      amount: [900],
-      currency: ["XPF"],
-      orderId: ["myOrderId-999999"],
-      email: ["sample@example.com"]
-    });
+  constructor(public paymentService: PaymentService) {
   }
 
-  ngAfterViewInit() {
+  ngOnInit(): void {
+      this.paymentService.formTokenResponse$.subscribe((formTokenResponse) => {
+        this.showFormWithformToken(formTokenResponse);
+      })
+  }
+
+  ngAfterViewInit(): void {
     this.paymentResult$.subscribe(value => {
       console.log("paymentResult changed: " + value);
-    })
-  }
-
-  submitPayment() {
-    let customer: Customer = {
-      email: this.paymentFormGroup.value.email
-    };
-    let paymentData: PaymentData = {
-      amount: this.paymentFormGroup.value.amount,
-      currency: this.paymentFormGroup.value.currency,
-      orderId: this.paymentFormGroup.value.orderId,
-      customer: customer
-    };
-    console.log("paymentData:");
-    console.log(paymentData);
-    this.paymentService.createPayment(paymentData).subscribe((formToken) => {
-      console.log("formToken:");
-      console.log(formToken);
-      this.showFormWithformToken(formToken);
     })
   }
 

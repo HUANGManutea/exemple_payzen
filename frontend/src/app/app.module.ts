@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { PageModule } from './page/page.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PageModule } from './page/page.module';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FlexLayoutModule,
     PageModule
   ],
   providers: [PaymentService],

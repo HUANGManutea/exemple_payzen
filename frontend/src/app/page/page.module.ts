@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ComponentsModule } from '../components/components.module';
 import { HomePage } from './home/home.page';
 
 const pages = [
@@ -12,8 +13,9 @@ const pages = [
     ...pages
   ],
   imports: [
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
+    CommonModule,
+    FlexLayoutModule,
+    ComponentsModule
   ],
   exports: [
     ...pages

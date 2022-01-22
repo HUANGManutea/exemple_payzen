@@ -1,0 +1,15 @@
+<div fxLayout="column">
+    <form [formGroup]="paymentFormGroup" (ngSubmit)="submitPayment()">
+  
+      <label for="amount">amount: </label>
+      <input id="amount" type="text" formControlName="amount">
+  
+      <label for="currency">currency: </label>
+      <input id="currency" type="text" formControlName="currency">
+    
+      <label for="email">email: </label>
+      <input id="email" type="text" formControlName="email">
+  
+      <button type="submit">Submit Payment</button>
+    </form>
+  </div>
