@@ -1,16 +1,6 @@
-<div fxLayout="column">
-    <h1>Form 1</h1>
-    <app-payment-form></app-payment-form>
-    <h1>Form 2</h1>
-    <div class="container">
-      <div id="myPaymentForm"></div>
-    </div>
-    <h1>Payment Result</h1>
-    <ng-container *ngIf="paymentResult$ | async as paymentResult">
-      <div *ngIf="paymentResult !== ''">
-        résultat: {{paymentResult}}
-      </div>
-    </ng-container>
-    
+<div fxLayout="column" fxLayoutAlign="start start" class="page-container">
+  <div fxLayout="column" fxLayoutAlign="start center">
+    <h1>Please enter the order informations</h1>
+    <app-order-form (orderCreated)="navigateToPayment()"></app-order-form>
   </div>
-  
+</div>

@@ -1,6 +1,6 @@
 import { Customer } from "./customer";
 
-export interface PaymentData {
+export interface OrderData {
     amount: number;
     currency: string;
     orderId: string;
