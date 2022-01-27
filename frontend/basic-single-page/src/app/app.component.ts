@@ -13,7 +13,6 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public title = 'frontend';
   public paymentFormGroup: FormGroup;
   public paymentResult$: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
