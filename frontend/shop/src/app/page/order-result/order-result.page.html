@@ -1,0 +1,12 @@
+<div fxLayout="column" class="page-container">
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+    <h1>Payment Result</h1>
+    <ng-container *ngIf="orderResult$ | async as orderResult; else loading">
+      <div *ngIf="orderResult.result !== ''">résultat: {{orderResult.result}}</div>
+    </ng-container>
+    <ng-template #loading>
+      <div>waiting...</div>
+    </ng-template>
+    <button mat-raised-button color="primary" (click)="goToHome()">Return to Home</button>
+  </div>
+</div>

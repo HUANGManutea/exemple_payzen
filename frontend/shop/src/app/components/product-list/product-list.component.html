@@ -1,0 +1,8 @@
+<div fxLayout="column">
+  <h1>Boutique</h1>
+  <div fxFlexFill="" fxLayout="row" fxLayoutGap="10px grid">
+    <ng-container *ngFor="let product of (products$ | async)">
+      <app-product [product]="product" (buy)="buyProducts($event)"></app-product>
+    </ng-container>
+  </div>
+</div>
