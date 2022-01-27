@@ -1,0 +1,20 @@
+<div fxLayout="column" fxLayoutGap="10px">
+  <h1>Panier</h1>
+  <ng-container *ngIf="(cart$ | async) as cart">
+    <div fxLayout="column" fxLayoutGap="10px">
+      <div fxLayout="column" fxLayoutGap="10px">
+        <ng-container *ngFor="let item of cart.cartItems">
+          <app-cart-item [item]="item"></app-cart-item>
+        </ng-container>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between stretch">
+        <h2>Total</h2>
+        <h2>{{cart.total}} XPF</h2>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end stretch">
+        <button mat-raised-button (click)="checkoutCart()">Commander</button>
+      </div>
+
+    </div>
+  </ng-container>
+</div>
