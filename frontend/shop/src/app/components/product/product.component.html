@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-content>
+    <img mat-card-image [src]="product.imageUrl">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <h3>{{product.name}}</h3>
+      <h4>{{product.price}} XPF</h4>
+    </div>
+    <form [formGroup]="buyProductFormGroup" (ngSubmit)="buyProducts()">
+      <div fxLayout="row" fxLayoutAlign="space-between stretch">
+        <mat-form-field>
+          <mat-label>quantité</mat-label>
+          <input matInput type="number" formControlName="quantity">
+        </mat-form-field>
+        <button mat-raised-button type="submit" color="primary">Acheter</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
