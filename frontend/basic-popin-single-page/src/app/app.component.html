@@ -1,0 +1,29 @@
+<div>
+  <h1>Form 1</h1>
+  <div>
+    <form [formGroup]="paymentFormGroup" (ngSubmit)="submitPayment()">
+  
+      <label for="amount">amount: </label>
+      <input id="amount" type="text" formControlName="amount">
+  
+      <label for="currency">currency: </label>
+      <input id="currency" type="text" formControlName="currency">
+    
+      <label for="email">email: </label>
+      <input id="email" type="text" formControlName="email">
+  
+      <button type="submit">Submit Payment</button>
+    </form>
+  </div>
+  <h1>Form 2</h1>
+  <div class="container">
+    <div id="myPaymentForm"></div>
+  </div>
+  <h1>Payment Result</h1>
+  <ng-container *ngIf="paymentResult$ | async as paymentResult">
+    <div *ngIf="paymentResult !== ''">
+      résultat: {{paymentResult}}
+    </div>
+  </ng-container>
+  
+</div>
