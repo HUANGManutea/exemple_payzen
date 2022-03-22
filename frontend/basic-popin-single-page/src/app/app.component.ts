@@ -15,7 +15,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AppComponent {
   public paymentFormGroup: FormGroup;
   public paymentResult$: BehaviorSubject<string> = new BehaviorSubject<string>("");
-
+  
   constructor(private formBuilder: FormBuilder, public paymentService: PaymentService) {
     this.paymentFormGroup = this.formBuilder.group({
       amount: [900],
@@ -24,13 +24,13 @@ export class AppComponent {
       email: ["sample@example.com"]
     });
   }
-
+  
   ngAfterViewInit() {
     this.paymentResult$.subscribe(value => {
       console.log("paymentResult changed: " + value);
     })
   }
-
+  
   submitPayment() {
     let customer: Customer = {
       email: this.paymentFormGroup.value.email
@@ -49,31 +49,38 @@ export class AppComponent {
       this.showFormWithformToken(formToken);
     })
   }
-
-  showFormWithformToken(formTokenResponse: FormTokenResponse) {
+  
+  async showFormWithformToken(formTokenResponse: FormTokenResponse) {
     const endpoint = "https://static.osb.pf";
     const publicKey = "58739933:testpublickey_NUFA6m8QLqEaHktbQ1TkA7Z596H8KEFCiKOaO4871cZCH";
-    KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
-      .then( ({ KR }) =>
-        KR.setFormConfig({
-          /* set the minimal configuration */
-          formToken: formTokenResponse.formToken,
-          "kr-language": "fr-FR" /* to update initialization parameter */
-        })
-      )
-      .then( ({ KR }) =>
-        KR.addForm("#myPaymentForm")
-      ) /* add a payment form  to myPaymentForm div*/
-      // .then(({ KR, result }) =>
-      //   KR.showForm(result.formId)
-      // ) /* show the payment form */
-      // .then( ({ KR }) => KR.onSubmit(response => this.showPaid(response)))
-      .then(({ KR, result }) =>
-        KR.openPopin("#myPaymentForm")
-      ) /* show the payment form */
-      // .then( ({ KR }) => KR.onSubmit(response => this.showPaid(response)))
-  }
+    let KRWrapper = await KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
 
+    let KR = KRWrapper.KR
+    
+    await KR.setFormConfig({
+      /* set the minimal configuration */
+      formToken: formTokenResponse.formToken,
+      "kr-language": "fr-FR", /* to update initialization parameter */
+      // this ignore is important,
+      // kr-popin is required,
+      // but the interface does not describe this field
+      // @ts-ignore
+      'kr-popin': true,
+    })
+    //add a payment form  to myPaymentForm div
+    let KRWrapperResult = await KR.addForm("#myPaymentForm")
+    let result = KRWrapperResult.result
+
+    // show the payment form
+    await KR.showForm(result.formId)
+
+    // show the popin
+    await KR.openPopin(result.formId);
+    console.log("did openpopin");
+
+    await KR.onSubmit(response => this.showPaid(response));
+  }
+  
   showPaid(response: KRPaymentResponse) {
     if (response.clientAnswer.orderStatus === "PAID") {
       console.log("showPaid: payé");
