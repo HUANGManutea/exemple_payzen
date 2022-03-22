@@ -76,7 +76,6 @@ export class AppComponent {
 
     // show the popin
     await KR.openPopin(result.formId);
-    console.log("did openpopin");
 
     await KR.onSubmit(response => this.showPaid(response));
   }
