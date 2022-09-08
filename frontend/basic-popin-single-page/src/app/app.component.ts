@@ -71,11 +71,11 @@ export class AppComponent {
     let KRWrapperResult = await KR.addForm("#myPaymentForm")
     let result = KRWrapperResult.result
 
-    // show the payment form
-    await KR.showForm(result.formId)
 
     // show the popin
     await KR.openPopin(result.formId);
+    // show the payment form
+    await KR.showForm(result.formId);
 
     await KR.onSubmit(response => this.showPaid(response));
   }
