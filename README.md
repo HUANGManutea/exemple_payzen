@@ -6,7 +6,10 @@ basé sur express.js
 
 ## Run
 
+```
+cd backend
 npm start
+```
 
 url: http://localhost:3000/payment
 
@@ -24,6 +27,10 @@ https://secure.osb.pf/doc/en-EN/rest/V4.0/javascript/
 
 ## Run
 
+```
+cd frontend/basic-popin-single-page
 npm start
+```
+
 
 url: http://localhost:4200/
