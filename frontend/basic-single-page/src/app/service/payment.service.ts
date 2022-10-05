@@ -5,6 +5,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { PaymentData } from '../model/paymentData';
 import { HttpHeaders } from '@angular/common/http';
 import { FormTokenResponse } from '../model/formTokenResponse';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class PaymentService {
@@ -17,6 +18,6 @@ export class PaymentService {
         'Content-Type':  'application/json',
       })
     };
-    return this.http.post<FormTokenResponse>('http://localhost:3000/payment', paymentData, httpOptions);
+    return this.http.post<FormTokenResponse>(`${environment.backendBaseUrl}/payment`, paymentData, httpOptions);
   }
 }
