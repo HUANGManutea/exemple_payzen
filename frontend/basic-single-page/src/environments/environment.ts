@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  backendBaseUrl: 'http://web31.osb.pf:9447'
 };
 
 /*
