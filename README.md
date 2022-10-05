@@ -25,12 +25,30 @@ documentation OSB:
 https://secure.osb.pf/doc/fr-FR/rest/V4.0/javascript/quick_start_popin.html
 https://secure.osb.pf/doc/en-EN/rest/V4.0/javascript/
 
-## Run
+## Démo
 
-```
-cd frontend/basic-popin-single-page
+Terminal 1 : lancement du backend
+
+```bash
+cd backend
+npm install
+
+## créer un fichier backend/.env en se basant sur backend/example.env
+
 npm start
 ```
 
 
-url: http://localhost:4200/
+Terminal 2 : lancement du frontend
+
+```bash
+cd frontend/basic-popin-single-page # ou frontend/basic-single-page pour le formulaire intégré dans la page
+npm install
+
+## créer un fichier dans src/app/environments/environment.ts en se basant sur src/app/environments/environment.example.ts
+
+ng serve --host 0.0.0.0 --port <myport> --disable-host-check
+```
+
+
+url: http://localhost:<port>/
