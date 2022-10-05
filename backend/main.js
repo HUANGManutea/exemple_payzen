@@ -53,27 +53,12 @@ app.post("/payment", (req, res) => {
 app.post('/validatePayment', (req, res) => {
   const answer = req.body.clientAnswer
   const hash = req.body.hash
-  const answerHash = Hex.stringify(
-    hmacSHA256(JSON.stringify(answer), 'CHANGE_ME: HMAC SHA256 KEY')
-  )
-  if (hash === answerHash) res.status(200).send('Valid payment')
-  else res.status(500).send('Payment hash mismatch')
-
-  if (answer == null || hash == null) {
-    // case no answer or hash
-    // => don't validate
-    res.status(500).send('Missing hash')
+  const answerHash = computeValidationHash(answer)
+  if (hash === answerHash) {
+    res.status(200).send('Valid payment')
   } else {
-      // compute check value
-      const answerHash = computeValidationHash(answer)
-      if (hash === answerHash) {
-          // case matching
-          res.status(200).send('Valid payment')
-      } else {
-          // case not matching
-          res.status(500).send('Payment hash mismatch')
-      }
-    }
+    res.status(500).send('Payment hash mismatch')
+  }
 })
 
 app.listen(port, () => {
