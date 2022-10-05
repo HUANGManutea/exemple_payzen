@@ -45,7 +45,7 @@ app.post("/payment", (req, res) => {
     res.send({formToken: response.data.answer.formToken});
   }).catch((error) => {
     console.error(error);
-    res.status(500).send("error");
+    res.status(500).json(error);
   });
 });
 
@@ -55,9 +55,9 @@ app.post('/validatePayment', (req, res) => {
   const hash = req.body.hash
   const answerHash = computeValidationHash(answer)
   if (hash === answerHash) {
-    res.status(200).send('Valid payment')
+    res.status(200).json({result: 'Valid payment'})
   } else {
-    res.status(500).send('Payment hash mismatch')
+    res.status(500).json({result: 'Payment hash mismatch'})
   }
 })
 

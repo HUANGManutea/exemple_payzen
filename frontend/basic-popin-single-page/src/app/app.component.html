@@ -21,8 +21,8 @@
   </div>
   <h1>Payment Result</h1>
   <ng-container *ngIf="paymentResult$ | async as paymentResult">
-    <div *ngIf="paymentResult !== ''">
-      résultat: {{paymentResult}}
+    <div>
+      résultat: {{paymentResult.result}}
     </div>
   </ng-container>
   

@@ -6,6 +6,7 @@ import { PaymentService } from './service/payment.service';
 import KRGlue from "@lyracom/embedded-form-glue";
 import { FormTokenResponse } from './model/formTokenResponse';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -43,17 +44,15 @@ export class AppComponent {
     };
     console.log("paymentData:");
     console.log(paymentData);
-    this.paymentService.createPayment(paymentData).subscribe((formToken) => {
-      console.log("formToken:");
-      console.log(formToken);
-      this.showFormWithformToken(formToken);
+    this.paymentService.createPayment(paymentData).subscribe((formTokenResponse) => {
+      console.log("formTokenResponse:");
+      console.log(formTokenResponse);
+      this.showFormWithformToken(formTokenResponse);
     })
   }
   
   async showFormWithformToken(formTokenResponse: FormTokenResponse) {
-    const endpoint = "https://static.osb.pf";
-    const publicKey = "58739933:testpublickey_NUFA6m8QLqEaHktbQ1TkA7Z596H8KEFCiKOaO4871cZCH";
-    let KRWrapper = await KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+    let KRWrapper = await KRGlue.loadLibrary(environment.jsEndpointLibrary, environment.jsPublicKey) /* Load the remote library */
 
     let KR = KRWrapper.KR
     
@@ -71,26 +70,12 @@ export class AppComponent {
     let KRWrapperResult = await KR.addForm("#myPaymentForm")
     let result = KRWrapperResult.result
 
+    await KR.onSubmit(response => this.paymentService.validatePayment(response));
 
     // show the popin
     await KR.openPopin(result.formId);
     // show the payment form
     await KR.showForm(result.formId);
 
-    await KR.onSubmit(response => this.showPaid(response));
-  }
-  
-  showPaid(response: KRPaymentResponse) {
-    if (response.clientAnswer.orderStatus === "PAID") {
-      console.log("showPaid: payé");
-      console.log(response.clientAnswer.orderStatus);
-      // Manage the payment done redirection here
-      this.paymentResult$.next("commande payée");
-    } else {
-      console.log("showPaid: refusé");
-      // Show error message to the user
-      this.paymentResult$.next("commande annulée");
-    }
-    return false; // If you want to prevent the de default redirection
   }
 }

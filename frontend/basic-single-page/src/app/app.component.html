@@ -20,9 +20,9 @@
     <div id="myPaymentForm"></div>
   </div>
   <h1>Payment Result</h1>
-  <ng-container *ngIf="paymentResult$ | async as paymentResult">
-    <div *ngIf="paymentResult !== ''">
-      résultat: {{paymentResult}}
+  <ng-container *ngIf="paymentService.paymentResult$ | async as paymentResult">
+    <div>
+      résultat: {{paymentResult.result}}
     </div>
   </ng-container>
   
