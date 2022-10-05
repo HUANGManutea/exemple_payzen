@@ -5,6 +5,7 @@ const axios = require('axios').default;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const hmacSHA256 = require('crypto-js/hmac-sha256');
+const Base64 = require('crypto-js/enc-base64');
 const Hex = require('crypto-js/enc-hex');
 const Utf8 = require ('crypto-js/enc-utf8');
 
