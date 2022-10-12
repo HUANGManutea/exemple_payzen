@@ -17,6 +17,7 @@ app.use(cors());
 app.options('*', cors());
 app.use(bodyParser.json());
 
+const apiBaseUrl = process.env.PAYZEN_BASE_URL;
 const payzenUser = process.env.PAYZEN_USER;
 const payzenPassword = process.env.PAYZEN_PASSWORD;
 const payzenValidationKey = process.env.PAYZEN_VALIDATION_KEY;
@@ -34,7 +35,7 @@ app.post("/payment", (req, res) => {
   console.log(payment);
 
   // Call CreatePayment web service to create the form token
-  axios.post("https://api.secure.osb.pf/api-payment/V4/Charge/CreatePayment", payment, {
+  axios.post(`${apiBaseUrl}/Charge/CreatePayment`, payment, {
     headers: {
       'Authorization': `Basic ${authToken}`,
       'Content-Type': 'application/json'
