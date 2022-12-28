@@ -3,6 +3,9 @@
   <div>
     <form [formGroup]="paymentFormGroup" (ngSubmit)="submitPayment()">
   
+      <label for="orderId">orderId: </label>
+      <input id="orderId" type="text" formControlName="orderId">
+      
       <label for="amount">amount: </label>
       <input id="amount" type="text" formControlName="amount">
   
@@ -22,7 +25,7 @@
   <h1>Payment Result</h1>
   <ng-container *ngIf="paymentService.paymentResult$ | async as paymentResult">
     <div>
-      résultat: {{paymentResult.result}}
+      résultat: {{paymentResult}}
     </div>
   </ng-container>
   

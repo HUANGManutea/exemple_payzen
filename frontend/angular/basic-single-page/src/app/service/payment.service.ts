@@ -10,7 +10,7 @@ import { PaymentResult } from '../model/paymentResult';
 
 @Injectable({ providedIn: 'root'})
 export class PaymentService {
-  public paymentResult$ = new BehaviorSubject<PaymentResult | null>(null);
+  public paymentResult$ = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) { }
 
@@ -29,8 +29,8 @@ export class PaymentService {
         'Content-Type':  'application/json',
       })
     };
-    this.http.post<PaymentResult>(`${environment.backendBaseUrl}/validatePayment`, response, httpOptions)
-    .subscribe((response: PaymentResult) => {
+    this.http.post<string>(`${environment.backendBaseUrl}/validatePayment`, response, httpOptions)
+    .subscribe((response: string) => {
       this.paymentResult$.next(response);
       // If you want to prevent the default redirection
       return false; 
