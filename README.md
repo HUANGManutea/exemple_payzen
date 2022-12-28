@@ -41,4 +41,4 @@ ng serve --host 0.0.0.0 --port <myport> --disable-host-check
 ```
 
 
-url: http://localhost:<port>/
+url: http://localhost:port/
