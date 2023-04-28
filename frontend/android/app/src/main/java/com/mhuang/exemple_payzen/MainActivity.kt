@@ -1,9 +1,12 @@
 package com.mhuang.exemple_payzen
 
+import android.R.attr.country
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -25,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 /**
  * Main activity
@@ -68,7 +72,9 @@ class MainActivity : AppCompatActivity() {
         price = 1000,
         imgResId = R.drawable.burger)
     private var email = "example@mail.com"
+    private var reference = "cust1"
     private var apiUrl = "http://192.168.0.110:9447"
+    private val formActions = arrayOf("PAYMENT", "ASK_REGISTER_PAY", "REGISTER_PAY", "CUSTOMER_WALLET")
 
     /**
      * onCreate method
@@ -87,11 +93,17 @@ class MainActivity : AppCompatActivity() {
         articlePrice.text = "${article.price} XPF"
 
         editEmail.setText(email)
+        editReference.setText(reference)
         editAPIUrl.setText(ApiClient.BASE_URL)
 
         // listen to email change
         editEmail.doOnTextChanged { text, _, _, _ -> email = text.toString() }
         editAPIUrl.doOnTextChanged { text, _, _, _ -> ApiClient.setAPIUrl(text.toString()) }
+
+        // formAction
+        val formActionAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, formActions)
+        formActionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        formActionSpinner.adapter = formActionAdapter
 
         try {
             initPayzen(applicationContext)
@@ -115,13 +127,15 @@ class MainActivity : AppCompatActivity() {
      */
     fun onPayClick(view : View) {
         displayLoadingPanel()
+        val selectedView: TextView = formActionSpinner.selectedView as TextView
         val order = Order(
             amount = article.price,
             orderId = generateOrderId(),
             currency = "XPF",
-            customer = Customer(email = email),
+            customer = Customer(email = email, reference = reference),
             formTokenVersion = Lyra.getFormTokenVersion(),
-            mode = BuildConfig.ENV_MODE
+            mode = BuildConfig.ENV_MODE,
+            formAction = selectedView.text.toString()
         )
         createPaymentFormToken(order, lifecycleScope, applicationContext, supportFragmentManager)
         hideLoadingPanel()

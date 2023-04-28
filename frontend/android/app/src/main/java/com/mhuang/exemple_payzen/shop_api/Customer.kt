@@ -1,3 +1,3 @@
 package com.mhuang.exemple_payzen.shop_api
 
-data class Customer(val email: String)
+data class Customer(val email: String, val reference: String)

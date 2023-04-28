@@ -6,5 +6,6 @@ data class Order(
     val customer: Customer,
     val orderId: String,
     val formTokenVersion: Int,
-    val mode: String
+    val mode: String,
+    val formAction: String
 )
